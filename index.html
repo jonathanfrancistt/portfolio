@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chameleon Graphics + Media — Portfolio</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-dark:#0B211E;
+    --bg-darker:#071512;
+    --teal:#1E9A87;
+    --green:#8DC63F;
+    --yellow:#F5D033;
+    --orange:#F2611F;
+    --cream:#F3F1EA;
+    --cream-dim:#E7E3D6;
+    --ink:#0B211E;
+    --paper-text:#EDEFE9;
+    --paper-text-dim:#B9C4BE;
+    --radius:14px;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.wordmark,.pill,.btn,.tag{
+    font-family:'Space Grotesk',system-ui,sans-serif;
+  }
+  img,video{max-width:100%;display:block;}
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  header.site-nav{
+    position:sticky;top:0;z-index:40;
+    background:rgba(11,33,30,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:14px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--paper-text);}
+  .brand svg,.brand img{display:block;}
+  .brand span{font-weight:700;font-size:17px;letter-spacing:0.01em;}
+  .brand span em{color:var(--green);font-style:normal;}
+  nav.links{display:flex;gap:28px;align-items:center;}
+  nav.links a{
+    color:var(--paper-text-dim);text-decoration:none;font-size:14.5px;font-weight:500;
+    transition:color .15s ease;
+  }
+  nav.links a:hover{color:var(--paper-text);}
+  .nav-cta{
+    background:var(--orange);color:#fff;padding:9px 18px;border-radius:999px;
+    font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;
+  }
+  .menu-btn{display:none;background:none;border:0;color:var(--paper-text);cursor:pointer;padding:6px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;overflow:hidden;background:var(--bg-dark);color:var(--paper-text);
+    padding:72px 0 88px;
+  }
+  .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr 0.85fr;gap:56px;align-items:center;}
+  .hero-facets{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0.5;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;color:var(--green);
+    font-size:13.5px;font-weight:600;letter-spacing:0.01em;margin-bottom:18px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--green);}
+  h1.hero-title{
+    font-size:clamp(34px,4.6vw,54px);line-height:1.08;font-weight:700;margin:0 0 22px;
+    letter-spacing:-0.01em;
+  }
+  h1.hero-title .grad{
+    background:linear-gradient(90deg,var(--teal),var(--green) 45%,var(--yellow) 75%,var(--orange));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lead{font-size:17.5px;color:var(--paper-text-dim);max-width:480px;margin:0 0 32px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    font-weight:600;font-size:15px;padding:13px 26px;border-radius:999px;text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:0;transition:transform .15s ease,opacity .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--orange);color:#fff;}
+  .btn-ghost{background:transparent;color:var(--paper-text);border:1.5px solid rgba(255,255,255,0.25);}
+  .btn-ghost:hover{border-color:rgba(255,255,255,0.5);}
+
+  .hero-media{position:relative;}
+  .hero-media-frame{
+    position:relative;border-radius:20px;overflow:hidden;background:var(--bg-darker);
+    box-shadow:0 30px 70px -20px rgba(0,0,0,0.55);border:1px solid rgba(255,255,255,0.08);
+  }
+  .hero-media-frame video{width:100%;height:auto;display:block;}
+  .hero-media-caption{
+    position:absolute;left:16px;bottom:16px;background:rgba(7,21,18,0.75);backdrop-filter:blur(4px);
+    color:#fff;font-size:12.5px;padding:7px 13px;border-radius:999px;display:flex;align-items:center;gap:7px;
+    border:1px solid rgba(255,255,255,0.1);
+  }
+  .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+  /* ---------- STATS / CAPABILITIES STRIP ---------- */
+  .strip{background:var(--bg-darker);color:var(--paper-text-dim);padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+  .strip .wrap{display:flex;gap:38px;flex-wrap:wrap;font-size:13.5px;}
+  .strip b{color:var(--paper-text);font-weight:600;}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{padding:88px 0;}
+  .section-head{max-width:620px;margin-bottom:44px;}
+  .section-head .kicker{font-size:13px;font-weight:600;color:var(--teal);text-transform:none;letter-spacing:0.02em;margin-bottom:10px;display:block;}
+  .section-head h2{font-size:clamp(26px,3.2vw,36px);margin:0 0 12px;font-weight:700;letter-spacing:-0.01em;}
+  .section-head p{color:#5c665f;font-size:15.5px;margin:0;}
+  .section.on-dark{background:var(--bg-dark);color:var(--paper-text);}
+  .section.on-dark .section-head p{color:var(--paper-text-dim);}
+
+  /* ---------- FEATURED REEL ---------- */
+  .reel{
+    background:var(--bg-dark);color:var(--paper-text);padding:70px 0 80px;
+    border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .reel .wrap{display:grid;grid-template-columns:0.9fr 1.1fr;gap:52px;align-items:center;}
+  .reel-copy .kicker{font-size:13px;font-weight:600;color:var(--yellow);margin-bottom:12px;display:block;}
+  .reel-copy h2{font-size:clamp(24px,3vw,32px);margin:0 0 14px;font-weight:700;}
+  .reel-copy p{color:var(--paper-text-dim);font-size:15.5px;margin:0 0 22px;max-width:420px;}
+  .reel-media{border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);box-shadow:0 24px 60px -18px rgba(0,0,0,0.6);}
+  .reel-media video,.reel-media img{width:100%;display:block;}
+  .reel-media .ph{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;color:#fff;}
+
+  /* ---------- FILTER PILLS ---------- */
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
+  .pill{
+    border:1.5px solid #d8d4c5;background:#fff;color:#39433d;padding:9px 18px 9px 14px;
+    border-radius:999px;font-size:14px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+    transition:all .15s ease;
+  }
+  .pill svg{width:16px;height:16px;flex-shrink:0;}
+  .pill:hover{border-color:#b9b39a;}
+  .pill.active{background:var(--ink);border-color:var(--ink);color:#fff;}
+  .pill .count{
+    font-size:11.5px;background:rgba(0,0,0,0.08);padding:1px 7px;border-radius:999px;font-weight:600;
+  }
+  .pill.active .count{background:rgba(255,255,255,0.18);}
+
+  /* ---------- WORK GRID ---------- */
+  .grid{
+    display:grid;grid-template-columns:repeat(6,1fr);gap:20px;grid-auto-flow:dense;
+    transition:opacity .25s ease;
+  }
+  .grid.filtering{opacity:0;}
+  .card{
+    position:relative;border-radius:var(--radius);overflow:hidden;cursor:pointer;
+    background:#fff;border:1px solid #e5e1d3;
+    grid-column:span 3;
+  }
+  .card.size-lg{grid-column:span 4;}
+  .card.size-sm{grid-column:span 2;}
+  .card-media{
+    position:relative;aspect-ratio:4/3;background:#e9e6d9;overflow:hidden;
+  }
+  .card.size-lg .card-media{aspect-ratio:16/10;}
+  .card-media video,.card-media img{width:100%;height:100%;object-fit:cover;display:block;}
+  .card-media .ph{
+    width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    color:#fff;text-align:center;padding:20px;
+  }
+  .card-media .ph svg{width:34px;height:34px;opacity:0.9;}
+  .card-media .ph .ph-label{font-size:12px;font-weight:600;opacity:0.85;font-family:'Inter';}
+  .card-badge{
+    position:absolute;top:12px;left:12px;background:rgba(11,33,30,0.75);color:#fff;font-size:11px;
+    font-weight:600;padding:5px 10px;border-radius:999px;backdrop-filter:blur(3px);
+    display:flex;align-items:center;gap:5px;
+  }
+  .card-badge svg{width:11px;height:11px;}
+  .card-body{padding:16px 18px 18px;}
+  .card-cat{font-size:11.5px;font-weight:600;color:var(--teal);margin-bottom:5px;display:block;}
+  .card-title{font-size:15.5px;font-weight:700;margin:0;font-family:'Space Grotesk';}
+  .placeholder-flag{
+    font-size:10.5px;color:#9a9484;margin-top:6px;display:flex;align-items:center;gap:5px;font-family:'Inter';font-weight:500;
+  }
+
+  .ph{background:linear-gradient(135deg,#5b6b66,#2e3a37);}
+  /* category tint for placeholder media */
+  .ph-motion{background:linear-gradient(135deg,var(--teal),#0e5348);}
+  .ph-branding{background:linear-gradient(135deg,var(--green),#4c7a1e);}
+  .ph-event{background:linear-gradient(135deg,var(--orange),#a33d0f);}
+  .ph-print{background:linear-gradient(135deg,var(--yellow),#b8891c);}
+  .ph-mockup{background:linear-gradient(135deg,#6a7ddb,#38408f);}
+  .ph-missing{background:linear-gradient(135deg,#a0431f,#5c230e);}
+  .ph-missing .ph-label{line-height:1.5;}
+
+  /* ---------- ABOUT ---------- */
+  .about .wrap{display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;align-items:start;}
+  .about-mark{
+    height:64px;width:auto;display:block;
+  }
+  .about h2{font-size:clamp(24px,3vw,32px);margin:18px 0 16px;font-weight:700;letter-spacing:-0.01em;}
+  .about p{font-size:15.5px;color:#3f4841;margin:0 0 16px;max-width:480px;}
+  .about-facts{display:grid;grid-template-columns:1fr 1fr;gap:22px 28px;margin-top:8px;}
+  .fact b{display:block;font-family:'Space Grotesk';font-size:22px;font-weight:700;color:var(--ink);}
+  .fact span{font-size:13.5px;color:#6b7469;}
+
+  /* ---------- CONTACT ---------- */
+  .contact{background:var(--bg-dark);color:var(--paper-text);}
+  .contact .wrap{text-align:center;max-width:640px;}
+  .contact h2{font-size:clamp(28px,4vw,42px);margin:0 0 16px;font-weight:700;letter-spacing:-0.01em;}
+  .contact p{color:var(--paper-text-dim);font-size:16px;margin:0 0 30px;}
+  .contact-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:34px;}
+  .contact-details{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;font-size:14.5px;color:var(--paper-text-dim);}
+  .contact-details a{text-decoration:none;color:var(--paper-text);display:flex;align-items:center;gap:7px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--bg-darker);color:var(--paper-text-dim);padding:26px 0;font-size:13px;}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox{
+    position:fixed;inset:0;background:rgba(7,15,13,0.88);backdrop-filter:blur(6px);
+    display:none;align-items:center;justify-content:center;z-index:100;padding:26px;
+  }
+  .lightbox.open{display:flex;}
+  .lb-panel{
+    background:var(--cream);border-radius:18px;max-width:820px;width:100%;max-height:88vh;overflow:auto;
+  }
+  .lb-media{background:#0B211E;}
+  .lb-media video,.lb-media img{width:100%;display:block;}
+  .lb-media iframe{width:100%;aspect-ratio:16/9;border:0;display:block;}
+  .lb-media .ph{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;color:#fff;}
+  .lb-media .ph svg{width:44px;height:44px;opacity:0.9;}
+  .lb-body{padding:26px 30px 30px;}
+  .lb-cat{font-size:12px;font-weight:600;color:var(--teal);}
+  .lb-title{font-size:22px;font-weight:700;font-family:'Space Grotesk';margin:8px 0 12px;}
+  .lb-desc{font-size:15px;color:#4a544d;line-height:1.6;}
+  .lb-close{
+    position:absolute;top:16px;right:16px;background:rgba(11,33,30,0.6);border:0;color:#fff;
+    width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:880px){
+    .hero .wrap{grid-template-columns:1fr;gap:40px;}
+    .hero{padding:44px 0 56px;}
+    .reel .wrap{grid-template-columns:1fr;gap:28px;}
+    .about .wrap{grid-template-columns:1fr;gap:28px;}
+    nav.links{display:none;}
+    .menu-btn{display:block;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .card{grid-column:span 1 !important;}
+    .section{padding:60px 0;}
+    .strip .wrap{gap:20px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <img src="assets/logo-nav.png" alt="Chameleon Graphics + Media"width="auto" height="60">
+    </a>
+    <nav class="links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="nav-cta">Start a project</a>
+    </nav>
+    <button class="menu-btn" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section class="hero" id="top">
+  <svg class="hero-facets" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+    <polygon points="1000,-40 1260,120 1180,320 950,260" fill="#1E9A87" opacity="0.18"/>
+    <polygon points="1180,320 950,260 1000,500 1240,480" fill="#8DC63F" opacity="0.14"/>
+    <polygon points="900,540 1150,600 1050,740 850,700" fill="#F5D033" opacity="0.10"/>
+    <polygon points="-60,500 160,420 260,620 40,700" fill="#F2611F" opacity="0.10"/>
+  </svg>
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="dot"></span>Chameleon Graphics + Media — Trinidad &amp; Tobago</span>
+      <h1 class="hero-title">Adapted for impact.<br>Built to <span class="grad">move</span>.</h1>
+      <p class="lead">From high-converting visual identity to dynamic motion, we adapt to whatever your brand needs next. Explore real-world projects built for brands that refuse to blend into the background.</p>
+      <div class="hero-actions">
+        <a href="#work" class="btn btn-primary">See the work</a>
+        <a href="#contact" class="btn btn-ghost">Start a project</a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <div class="hero-media-frame">
+        <video autoplay muted loop playsinline src="work/chameleon-logo-animation.mp4"></video>
+        <div class="hero-media-caption"><span class="live-dot"></span>Logo animation, on loop</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <span><b>10+ yrs</b> graphic design</span>
+    <span><b>2 yrs</b> animation, now the focus</span>
+    <span><b>Motion, branding, print &amp; event graphics</b> under one roof</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     FEATURED REEL
+============================================================ -->
+<section class="reel">
+  <div class="wrap">
+    <div class="reel-copy">
+      <span class="kicker">LATEST MOTION WORK</span>
+      <h2>Where the studio is headed next.</h2>
+      <p>Motion is the fastest-growing part of the work — logo reveals, animated social pieces, and short brand films. This is the newest one, on loop.</p>
+      <a href="#work" class="btn btn-primary">Browse all motion work</a>
+    </div>
+    <div class="reel-media" id="reelMedia"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WORK
+============================================================ -->
+<section class="section" id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">SELECTED WORK</span>
+      <h2>Designed to stand still or move forward.</h2>
+      <p>Select a category below to see how we adapt strategy into visual execution across still graphics and motion media.</p>
+    </div>
+
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT
+============================================================ -->
+<section class="section about" id="about">
+  <div class="wrap">
+    <div>
+       <img src="assets/logo-about.png" alt="Designer Image"width="auto" height="60">
+      <h2>One agile studio. Infinite visual adaptability.</h2>
+      <p>Chameleon Graphics + Media is an independent design and motion studio based in Trinidad & Tobago. Anchored by over a decade of graphic design mastery and specialized motion animation, we seamlessly adapt to your brand’s visual ecosystem—delivering everything from crisp print collateral to high-energy animation.</p>
+      <p>No agency bloat, no lost-in-translation briefs. Just direct, versatile visual craftsmanship engineered to help your brand adapt and lead in any medium. Have a brief? Let’s make it move.</p>
+    </div>
+    <div class="about-facts">
+      <div class="fact"><b>10+</b><span>Years in graphic design</span></div>
+      <div class="fact"><b>2</b><span>Years specializing in animation</span></div>
+      <div class="fact"><b>5</b><span>Categories of work, one studio</span></div>
+      <div class="fact"><b>TT</b><span>Based in Trinidad &amp; Tobago</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+============================================================ -->
+<section class="section contact" id="contact">
+  <div class="wrap">
+    <h2>Have a project in mind?</h2>
+    <p>Send over a brief, or just say what you're picturing — motion, print, branding, or all three.</p>
+    <div class="contact-actions">
+      <a href="mailto:chameleongraphicstt@gmail.com" class="btn btn-primary">Email the studio</a>
+      <a href="tel:18683197630" class="btn btn-ghost">Call / WhatsApp</a>
+    </div>
+    <div class="contact-details">
+      <a href="mailto:chameleongraphicstt@gmail.com">chameleongraphicstt@gmail.com</a>
+      <a href="tel:18683197630">1&#8209;868&#8209;319&#8209;7630</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> Chameleon Graphics + Media</span>
+    <span>Trinidad &amp; Tobago</span>
+  </div>
+</footer>
+
+<!-- ============================================================
+     LIGHTBOX
+============================================================ -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-panel" id="lbPanel" style="position:relative;">
+    <button class="lb-close" id="lbClose" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+    </button>
+    <div class="lb-media" id="lbMedia"></div>
+    <div class="lb-body">
+      <span class="lb-cat" id="lbCat"></span>
+      <h3 class="lb-title" id="lbTitle"></h3>
+      <p class="lb-desc" id="lbDesc"></p>
+    </div>
+  </div>
+</div>
+
+<script src="projects.js"></script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* If projects.js has a typo (missing comma, quote or bracket) show a clear
+   message instead of a blank page. */
+if (typeof PROJECTS === 'undefined' || typeof CATEGORIES === 'undefined') {
+  document.getElementById('grid').innerHTML =
+    '<p style="grid-column:1/-1;padding:24px;border:2px dashed #F2611F;border-radius:12px;color:#8a3b1f;background:#fff">' +
+    '<b>projects.js could not be read.</b> There is probably a missing comma, quote or bracket in the last line you edited. ' +
+    'VS Code underlines the problem in red. Fix it, save, and refresh.</p>';
+  document.querySelector('.reel').style.display = 'none';
+  throw new Error('projects.js could not be read');
+}
+
+const ICONS = {
+  motion:  '<polygon points="9,7 17,12 9,17" fill="currentColor"/>',
+  branding:'<path d="M12 2 L20 7 V17 L12 22 L4 17 V7 Z" fill="none" stroke="currentColor" stroke-width="1.6"/>',
+  event:   '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/>',
+  print:   '<rect x="5" y="3" width="14" height="18" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="8" y1="8" x2="16" y2="8" stroke="currentColor" stroke-width="1.4"/><line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" stroke-width="1.4"/><line x1="8" y1="16" x2="13" y2="16" stroke="currentColor" stroke-width="1.4"/>',
+  mockup:  '<rect x="4" y="4" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="4" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="13" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="13" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/>'
+};
+const DEFAULT_ICON = '<circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/>';
+const iconFor = k => ICONS[k] || DEFAULT_ICON;
+const CAT_LABEL = Object.fromEntries(CATEGORIES.map(c => [c.key, c.label]));
+const catLabel = k => CAT_LABEL[k] || k;
+const SIZE_CLASS = {sm: 'size-sm', md: '', lg: 'size-lg'};
+const showPh = (typeof SHOW_PLACEHOLDERS === 'undefined') || SHOW_PLACEHOLDERS;
+
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+  ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+
+/* A bare file name means "a file in the work folder". Full links and data are left alone. */
+function localPath(v) {
+  if (/^(https?:)?\/\//i.test(v) || /^data:/i.test(v)) return v;
+  return 'work/' + v.replace(/^(\.\/)?(work\/)?/i, '').split('/').map(encodeURIComponent).join('/');
+}
+
+/* Work out what kind of media a project is from its "file" value. */
+function classify(p) {
+  const f = (p.file || '').trim();
+  let m = {kind: 'placeholder'};
+  if (f) {
+    let x;
+    if (/^data:video\//i.test(f)) {
+      m = {kind: 'video', src: f};
+    } else if (/^data:/i.test(f)) {
+      m = {kind: 'image', src: f};
+    } else if (/youtu\.?be/i.test(f) && (x = f.match(/(?:youtu\.be\/|[?&]v=|embed\/|shorts\/)([\w-]{11})/))) {
+      m = {kind: 'embed', embed: 'https://www.youtube.com/embed/' + x[1] + '?autoplay=1&rel=0',
+           thumb: 'https://img.youtube.com/vi/' + x[1] + '/hqdefault.jpg', auto: true};
+    } else if (/vimeo\.com/i.test(f) && (x = f.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([a-z0-9]+))?/i))) {
+      m = {kind: 'embed', embed: 'https://player.vimeo.com/video/' + x[1] + '?autoplay=1' + (x[2] ? '&h=' + x[2] : '')};
+    } else if (/drive\.google\.com/i.test(f) && (x = f.match(/\/d\/([\w-]+)/) || f.match(/[?&]id=([\w-]+)/))) {
+      m = {kind: 'embed', embed: 'https://drive.google.com/file/d/' + x[1] + '/preview',
+           thumb: 'https://drive.google.com/thumbnail?id=' + x[1] + '&sz=w800', auto: true};
+    } else if (/\.(mp4|webm|mov|m4v|ogv)([?#].*)?$/i.test(f)) {
+      m = {kind: 'video', src: localPath(f)};
+    } else {
+      m = {kind: 'image', src: localPath(f)};
+    }
+  }
+  if (p.thumb) { m.thumb = localPath(p.thumb); m.auto = false; }
+  return m;
+}
+
+const ITEMS = PROJECTS
+  .map((p, i) => Object.assign({}, p, {idx: i, media: classify(p)}))
+  .filter(p => showPh || p.media.kind !== 'placeholder');
+
+ITEMS.forEach(p => {
+  if (!CAT_LABEL[p.cat]) console.warn('projects.js: unknown category "' + p.cat + '" on "' + p.title + '". It will only appear under All work.');
+});
+
+/* The featured piece fills the big "Latest motion work" section, so it is not repeated in the grid. */
+const FEATURED = ITEMS.find(p => p.featured && p.media.kind !== 'placeholder');
+const GRID_ITEMS = ITEMS.filter(p => p !== FEATURED);
+
+/* Shown in place of a file that could not be loaded (usually a typo in the file name). */
+function fileMissing(el) {
+  const d = document.createElement('div');
+  d.className = 'ph ph-missing';
+  d.innerHTML = '<span class="ph-label">Could not load this file:<br>' +
+    esc(decodeURIComponent(el.getAttribute('src') || '').slice(0, 70)) +
+    '<br>Check the file name and that it is in the work folder.</span>';
+  el.replaceWith(d);
+}
+/* Shown when an automatic video thumbnail cannot be fetched. */
+function thumbFail(el) {
+  const d = document.createElement('div');
+  d.className = 'ph ph-motion';
+  d.innerHTML = '<svg viewBox="0 0 24 24">' + ICONS.motion + '</svg><span class="ph-label">Play video</span>';
+  el.replaceWith(d);
+}
+
+function mediaHTML(p, big) {
+  const m = p.media;
+  if (m.kind === 'video') {
+    const poster = m.thumb ? ' poster="' + esc(m.thumb) + '"' : '';
+    return big
+      ? '<video controls autoplay loop playsinline' + poster + ' src="' + esc(m.src) + '" onerror="fileMissing(this)"></video>'
+      : '<video muted loop playsinline preload="metadata"' + poster + ' src="' + esc(m.src) + '" onerror="fileMissing(this)"></video>';
+  }
+  if (m.kind === 'embed') {
+    if (big) return '<iframe src="' + esc(m.embed) + '" allow="autoplay; fullscreen; picture-in-picture"></iframe>';
+    if (m.thumb) return '<img src="' + esc(m.thumb) + '" alt="' + esc(p.title) + '" loading="lazy" onerror="thumbFail(this)">';
+    return '<div class="ph ph-' + esc(p.cat) + '"><svg viewBox="0 0 24 24">' + ICONS.motion + '</svg><span class="ph-label">Play video</span></div>';
+  }
+  if (m.kind === 'image') {
+    return '<img src="' + esc(m.src) + '" alt="' + esc(p.title) + '" loading="lazy" onerror="fileMissing(this)">';
+  }
+  return '<div class="ph ph-' + esc(p.cat) + '"><svg viewBox="0 0 24 24">' + iconFor(p.cat) + '</svg>' +
+    '<span class="ph-label">Add your work here</span></div>';
+}
+
+function counts() {
+  const c = {all: GRID_ITEMS.length};
+  CATEGORIES.filter(cat => cat.key !== 'all').forEach(cat => {
+    c[cat.key] = GRID_ITEMS.filter(p => p.cat === cat.key).length;
+  });
+  return c;
+}
+
+function renderFilters(active) {
+  const c = counts();
+  const el = document.getElementById('filters');
+  /* Categories with no work in them are hidden. */
+  el.innerHTML = CATEGORIES.filter(cat => cat.key === 'all' || c[cat.key] > 0).map(cat => `
+    <button class="pill ${active === cat.key ? 'active' : ''}" data-cat="${esc(cat.key)}">
+      ${cat.key !== 'all' ? `<svg viewBox="0 0 24 24">${iconFor(cat.key)}</svg>` : ''}
+      ${esc(cat.label)}
+      <span class="count">${c[cat.key]}</span>
+    </button>
+  `).join('');
+  el.querySelectorAll('.pill').forEach(btn => {
+    btn.addEventListener('click', () => renderGrid(btn.dataset.cat));
+  });
+}
+
+function renderGrid(activeCat) {
+  activeCat = activeCat || 'all';
+  renderFilters(activeCat);
+  const grid = document.getElementById('grid');
+  grid.classList.add('filtering');
+
+  setTimeout(() => {
+    const items = GRID_ITEMS.filter(p => activeCat === 'all' || p.cat === activeCat);
+    grid.innerHTML = items.map(p => `
+      <article class="card ${SIZE_CLASS[p.size] || ''}" data-idx="${p.idx}">
+        <div class="card-media">
+          ${mediaHTML(p, false)}
+          ${(p.media.kind === 'video' || p.media.kind === 'embed') ? '<span class="card-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="9,7 17,12 9,17" fill="currentColor" stroke="none"/></svg>Motion</span>' : ''}
+        </div>
+        <div class="card-body">
+          <span class="card-cat">${esc(catLabel(p.cat))}</span>
+          <h3 class="card-title">${esc(p.title)}</h3>
+          ${p.media.kind === 'placeholder' ? '<div class="placeholder-flag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="8" x2="12" y2="13"/><circle cx="12" cy="16.3" r="0.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="9.5"/></svg>Placeholder: swap in real work</div>' : ''}
+        </div>
+      </article>
+    `).join('');
+
+    grid.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => openLightbox(Number(card.dataset.idx)));
+      const v = card.querySelector('video');
+      if (v) {
+        const io = new IntersectionObserver(entries => {
+          entries.forEach(e => e.isIntersecting ? v.play().catch(() => {}) : v.pause());
+        }, {threshold: 0.3});
+        io.observe(v);
+      }
+    });
+
+    grid.classList.remove('filtering');
+  }, 180);
+}
+
+function renderReel() {
+  const sec = document.querySelector('.reel');
+  const box = document.getElementById('reelMedia');
+  if (!FEATURED) { sec.style.display = 'none'; return; }
+  const m = FEATURED.media;
+  if (m.kind === 'video') {
+    const poster = m.thumb ? ' poster="' + esc(m.thumb) + '"' : '';
+    box.innerHTML = '<video autoplay muted loop playsinline' + poster + ' src="' + esc(m.src) + '" onerror="fileMissing(this)"></video>';
+  } else {
+    box.innerHTML = mediaHTML(FEATURED, false);
+    box.style.cursor = 'pointer';
+    box.addEventListener('click', () => openLightbox(FEATURED.idx));
+  }
+}
+
+function openLightbox(idx) {
+  const p = ITEMS.find(x => x.idx === idx);
+  if (!p) return;
+  document.getElementById('lbMedia').innerHTML = mediaHTML(p, true);
+  document.getElementById('lbCat').textContent = catLabel(p.cat);
+  document.getElementById('lbTitle').textContent = p.title || '';
+  document.getElementById('lbDesc').textContent = p.desc || '';
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lbMedia').innerHTML = '';
+}
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target.id === 'lightbox') closeLightbox();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+renderReel();
+renderGrid('all');
+</script>
+
+</body>
+</html>
