@@ -629,6 +629,19 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
 
 renderReel();
 renderGrid('all');
+
+  // Disable right-click menu
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
+
+  // Disable shortcut keys for saving (Ctrl+S / Cmd+S)
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+      e.preventDefault();
+    }
+  });
+
 </script>
 
 </body>
