@@ -273,6 +273,16 @@
     .about .wrap{grid-template-columns:1fr;gap:28px;}
     nav.links{display:none;}
     .menu-btn{display:block;}
+    nav.links.open{
+      display:flex;flex-direction:column;align-items:stretch;gap:2px;
+      position:absolute;top:100%;left:0;right:0;
+      background:var(--bg-dark);
+      padding:8px 28px 22px;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 20px 34px -16px rgba(0,0,0,0.45);
+    }
+    nav.links.open a{padding:12px 0;font-size:15.5px;}
+    nav.links.open .nav-cta{margin-top:10px;text-align:center;}
     .grid{grid-template-columns:repeat(2,1fr);}
     .card{grid-column:span 1 !important;}
     .section{padding:60px 0;}
@@ -308,8 +318,9 @@ function bioPhotoMissing(el) {
       <a href="#contact">Contact</a>
       <a href="#contact" class="nav-cta">Start a project</a>
     </nav>
-    <button class="menu-btn" aria-label="Menu">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <button class="menu-btn" aria-label="Menu" aria-expanded="false">
+      <svg class="icon-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg class="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
     </button>
   </div>
 </header>
@@ -468,6 +479,25 @@ function bioPhotoMissing(el) {
 <script src="projects.js"></script>
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Mobile menu button. */
+(function () {
+  const btn = document.querySelector('.menu-btn');
+  const links = document.querySelector('nav.links');
+  if (!btn || !links) return;
+  function setOpen(open) {
+    links.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.querySelector('.icon-open').style.display = open ? 'none' : '';
+    btn.querySelector('.icon-close').style.display = open ? '' : 'none';
+  }
+  btn.addEventListener('click', () => setOpen(!links.classList.contains('open')));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', e => {
+    if (links.classList.contains('open') && !links.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+})();
 
 /* If projects.js has a typo (missing comma, quote or bracket) show a clear
    message instead of a blank page. */
