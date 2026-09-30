@@ -214,6 +214,21 @@
   .fact b{display:block;font-family:'Space Grotesk';font-size:22px;font-weight:700;color:var(--ink);}
   .fact span{font-size:13.5px;color:#6b7469;}
 
+  /* ---------- BIO ---------- */
+  .bio{background:var(--cream-dim);}
+  .bio .wrap{display:grid;grid-template-columns:0.75fr 1.25fr;gap:56px;align-items:center;}
+  .bio-photo{border-radius:var(--radius);overflow:hidden;aspect-ratio:4/5;background:#e9e6d9;box-shadow:0 18px 40px -18px rgba(11,33,30,0.35);}
+  .bio-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .bio-photo .ph{width:100%;height:100%;}
+  .bio .kicker{font-size:13px;font-weight:600;color:var(--teal);letter-spacing:0.02em;margin-bottom:10px;display:block;}
+  .bio h2{font-size:clamp(24px,3vw,32px);margin:0 0 16px;font-weight:700;letter-spacing:-0.01em;}
+  .bio p{font-size:15.5px;color:#3f4841;margin:0 0 16px;max-width:520px;}
+  .bio-signoff{font-family:'Space Grotesk';font-weight:700;font-size:16px;margin-top:6px;}
+  @media(max-width:880px){
+    .bio .wrap{grid-template-columns:1fr;gap:28px;}
+    .bio-photo{max-width:320px;margin:0 auto;}
+  }
+
   /* ---------- CONTACT ---------- */
   .contact{background:var(--bg-dark);color:var(--paper-text);}
   .contact .wrap{text-align:center;max-width:640px;}
@@ -266,6 +281,17 @@
 </style>
 </head>
 <body>
+<script>
+/* Defined this early so it exists before the bio photo below has a chance
+   to fail and fire onerror — a script at the bottom of the page would
+   sometimes run too late. */
+function bioPhotoMissing(el) {
+  const d = document.createElement('div');
+  d.className = 'ph ph-mockup bio-ph';
+  d.innerHTML = '<span class="ph-label">Add your photo here<br>assets/profile-photo.jpg</span>';
+  el.replaceWith(d);
+}
+</script>
 
 <!-- ============================================================
      NAV
@@ -278,6 +304,7 @@
     <nav class="links">
       <a href="#work">Work</a>
       <a href="#about">About</a>
+      <a href="#bio">Bio</a>
       <a href="#contact">Contact</a>
       <a href="#contact" class="nav-cta">Start a project</a>
     </nav>
@@ -318,8 +345,8 @@
 
 <div class="strip">
   <div class="wrap">
-    <span><b>10+ yrs</b> graphic design</span>
-    <span><b>2 yrs</b> animation, now the focus</span>
+    <span><b>10+ years</b> graphic design</span>
+    <span><b>3 years</b> animation</span>
     <span><b>Motion, branding, print &amp; event graphics</b> under one roof</span>
   </div>
 </div>
@@ -363,14 +390,35 @@
     <div>
        <img src="assets/logo-about.png" alt="Designer Image"width="auto" height="60">
       <h2>One agile studio. Infinite visual adaptability.</h2>
-      <p>Chameleon Graphics + Media is an independent design and motion studio based in Trinidad & Tobago. Anchored by over a decade of graphic design mastery and specialized motion animation, we seamlessly adapt to your brand’s visual ecosystem—delivering everything from crisp print collateral to high-energy animation.</p>
+      <p>Chameleon Graphics & Media is an independent design and motion studio based in Trinidad & Tobago. Anchored by over a decade of graphic design mastery and specialized motion animation, we seamlessly adapt to your brand’s visual ecosystem—delivering everything from crisp print collateral to high-energy animation.</p>
       <p>No agency bloat, no lost-in-translation briefs. Just direct, versatile visual craftsmanship engineered to help your brand adapt and lead in any medium. Have a brief? Let’s make it move.</p>
     </div>
     <div class="about-facts">
       <div class="fact"><b>10+</b><span>Years in graphic design</span></div>
-      <div class="fact"><b>2</b><span>Years specializing in animation</span></div>
+      <div class="fact"><b>3</b><span>Years specializing in animation</span></div>
       <div class="fact"><b>5</b><span>Categories of work, one studio</span></div>
       <div class="fact"><b>TT</b><span>Based in Trinidad &amp; Tobago</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BIO
+     To add your photo: put an image in the assets folder and
+     change the src below to match its file name.
+     To edit the text: just type over the two paragraphs and the
+     sign-off line.
+============================================================ -->
+<section class="section bio" id="bio">
+  <div class="wrap">
+    <div class="bio-photo">
+      <img src="assets/profile-photo.jpg" alt="Jonathan Francis" onerror="bioPhotoMissing(this)">
+    </div>
+    <div>
+      <span class="kicker">THE PERSON BEHIND THE WORK</span>
+      <h2>Hi, I'm Jonathan.</h2>
+      <p>I'm the designer and animator behind Chameleon Graphics & Media bringing over 10 years of experience to every project.</p>
+      <p>With a background across visual arts, branding, and motion design, I specialize in taking ideas from initial concept all the way to polished, production-ready deliverables. My work spans everything from dynamic After Effects animations for government communication to identity systems for carnival bands, universities, and local businesses. Backed by formal training in Fine Art, Visual Communications, and Creative Storytelling, I focus on crafting visual work that feels intentional, compelling, and built to connect.</p>  
     </div>
   </div>
 </section>
@@ -511,6 +559,8 @@ function thumbFail(el) {
   d.innerHTML = '<svg viewBox="0 0 24 24">' + ICONS.motion + '</svg><span class="ph-label">Play video</span>';
   el.replaceWith(d);
 }
+/* bioPhotoMissing is defined at the top of <body> — see the small
+   inline script there — so it's ready before the bio photo can fail. */
 
 function mediaHTML(p, big) {
   const m = p.media;
